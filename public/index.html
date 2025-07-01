@@ -59,13 +59,30 @@
                 "curve-style": "bezier",
                 "font-size": "8px",
                 color: "#555",
+                'visibility': 'hidden',
               },
             },
           ],
           layout: {
             name: "cose",
             animate: true,
+            componentSpacing: 80,
+            nodeRepulsion: function( node ){ return 4096; },
+            nodeOverlap: 400,
           },
+        });
+        
+        // shows edges for a node when a node is clicked on
+        cy.on('click', 'node', function(event) {
+          var node = event.target;
+          node.connectedEdges().style('visibility', 'visible');
+        });
+        
+        // hides edges when the background is clicked on [doesn't work]
+        cy.on('click', function(event) {
+          if (event.target === cy) {
+            node.edges().style('visibility', 'hidden');
+          }
         });
 
         // Fill summary table
